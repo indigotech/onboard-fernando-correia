@@ -1,9 +1,7 @@
-import React from 'react';
+import { LoginForm } from './components/LoginForm';
 
-function App() {
-  return (
-    <h1>Hello World</h1>
-  );
+function App(): JSX.Element {
+  return <LoginForm />;
 }
 
 export default App;
