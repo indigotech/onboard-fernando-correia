@@ -22,20 +22,8 @@ To run the app we need to install all dependencies first. This can be done using
 npm install
 ```
 
-or simply
-
-```
-yarn
-```
-
 then we can run the app on the terminal with
 
 ```
 npm start
-```
-
-or
-
-```
-yarn start
 ```
