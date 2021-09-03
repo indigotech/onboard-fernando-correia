@@ -1,6 +1,6 @@
 import { Container } from './style';
 
-export function LoginForm(): JSX.Element {
+export const LoginForm: React.FC = () => {
   return (
     <Container>
       <h1>Bem-vindo(a) à Taqtile!</h1>
