@@ -1,94 +1,57 @@
-import { FormEvent, useState } from 'react';
-import { gql, useMutation } from '@apollo/client';
-import { validateEmail, validatePassword } from '../../utils/login-validations';
+import { FormEvent, useContext, useState } from 'react';
 import { ButtonLogin, Container, FormLogin, InputLogin } from './style';
-
-interface LoginResponseData {
-  login: {
-    token: string;
-    user: {
-      id: string;
-      name: string;
-      role: string;
-    };
-  };
-}
+import { Redirect, Route } from 'react-router';
+import { AuthContext } from '../../contexts/auth-context';
 
 export const LoginForm: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [loginError, setLoginError] = useState(false);
 
-  const LOGIN = gql`
-    mutation login($email: String!, $password: String!) {
-      login(data: { email: $email, password: $password }) {
-        token
-        user {
-          id
-          name
-          role
-        }
-      }
-    }
-  `;
-
-  const [login] = useMutation(LOGIN);
+  const { loading, loginError, loggedIn, authenticate } = useContext(AuthContext);
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
-    const isValidEmail = validateEmail(email);
-    const isValidPassword = validatePassword(password);
 
     setEmail('');
     setPassword('');
 
-    if (!isValidEmail || !isValidPassword) {
-      setLoginError(true);
-      return;
-    }
-
-    try {
-      const response = await login({ variables: { email, password } });
-      const responseData: LoginResponseData = response.data;
-
-      const token = responseData?.login.token.split(' ')[1];
-      document.cookie = `access_token=${token}`;
-
-      setLoginError(false);
-    } catch (err) {
-      setLoginError(true);
-    }
+    await authenticate(email, password);
   }
 
   return (
-    <Container>
-      <h1>Bem-vindo(a) à Taqtile!</h1>
+    <>
+      <Route exact path='/'>
+        {loggedIn ? <Redirect to='/dashboard' /> : ''}
+      </Route>
+      <Container>
+        <h1>Bem-vindo(a) à Taqtile!</h1>
 
-      <FormLogin onSubmit={handleSubmit}>
-        <label htmlFor='login-form-email'>E-mail</label>
-        <InputLogin
-          id='login-form-email'
-          type='text'
-          name='E-mail'
-          required
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
+        <FormLogin onSubmit={handleSubmit}>
+          <label htmlFor='login-form-email'>E-mail</label>
+          <InputLogin
+            id='login-form-email'
+            type='text'
+            name='E-mail'
+            required
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
 
-        <label htmlFor='login-form-password'>Password</label>
-        <InputLogin
-          id='login-form-password'
-          type='password'
-          name='Password'
-          required
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
+          <label htmlFor='login-form-password'>Password</label>
+          <InputLogin
+            id='login-form-password'
+            type='password'
+            name='Password'
+            required
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
 
-        {loginError ? <p style={{ color: 'red' }}>E-mail or Password incorrect</p> : ''}
+          {loginError ? <p style={{ color: 'red' }}>E-mail or Password incorrect</p> : ''}
 
-        <ButtonLogin type='submit'>Entrar</ButtonLogin>
-      </FormLogin>
-    </Container>
+          <ButtonLogin type='submit'>{loading ? <img src='spinner.gif' height='20px' /> : 'Entrar'}</ButtonLogin>
+        </FormLogin>
+      </Container>
+    </>
   );
 };

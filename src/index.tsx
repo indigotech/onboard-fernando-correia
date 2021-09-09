@@ -4,11 +4,14 @@ import App from './App';
 
 import { ApolloProvider } from '@apollo/client';
 import { client } from './services/apollo';
+import { AuthProvider } from './contexts/auth-context';
 
 ReactDOM.render(
   <React.StrictMode>
     <ApolloProvider client={client}>
-      <App />
+      <AuthProvider>
+        <App />
+      </AuthProvider>
     </ApolloProvider>
   </React.StrictMode>,
   document.getElementById('root'),
