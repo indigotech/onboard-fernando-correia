@@ -1,27 +1,63 @@
 import { FormEvent, useState } from 'react';
+import { gql, useMutation } from '@apollo/client';
 import { validateEmail, validatePassword } from '../../utils/login-validations';
 import { ButtonLogin, Container, FormLogin, InputLogin } from './style';
+
+interface LoginResponseData {
+  login: {
+    token: string;
+    user: {
+      id: string;
+      name: string;
+      role: string;
+    };
+  };
+}
 
 export const LoginForm: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loginError, setLoginError] = useState(false);
 
-  function handleSubmit(e: FormEvent) {
+  const LOGIN = gql`
+    mutation login($email: String!, $password: String!) {
+      login(data: { email: $email, password: $password }) {
+        token
+        user {
+          id
+          name
+          role
+        }
+      }
+    }
+  `;
+
+  const [login] = useMutation(LOGIN);
+
+  async function handleSubmit(e: FormEvent) {
     e.preventDefault();
-    const validEmail = validateEmail(email);
-    const validPassword = validatePassword(password);
+    const isValidEmail = validateEmail(email);
+    const isValidPassword = validatePassword(password);
 
     setEmail('');
     setPassword('');
 
-    if (!validEmail || !validPassword) {
+    if (!isValidEmail || !isValidPassword) {
       setLoginError(true);
       return;
     }
 
-    console.log({ email, password });
-    setLoginError(false);
+    try {
+      const response = await login({ variables: { email, password } });
+      const responseData: LoginResponseData = response.data;
+
+      const token = responseData?.login.token.split(' ')[1];
+      document.cookie = `access_token=${token}`;
+
+      setLoginError(false);
+    } catch (err) {
+      setLoginError(true);
+    }
   }
 
   return (
