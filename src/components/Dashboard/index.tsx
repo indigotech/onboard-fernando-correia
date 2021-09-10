@@ -54,14 +54,10 @@ export const Dashboard: React.FC = () => {
       )}
 
       {pageInfo?.hasPreviousPage && (
-        <UserNavigationButton onClick={() => setOffset(offset - limit)}>
-          Prev Page
-        </UserNavigationButton>
+        <UserNavigationButton onClick={() => setOffset(offset - limit)}>Prev Page</UserNavigationButton>
       )}
       {pageInfo?.hasNextPage && (
-        <UserNavigationButton onClick={() => setOffset(offset + limit)}>
-          Next Page
-        </UserNavigationButton>
+        <UserNavigationButton onClick={() => setOffset(offset + limit)}>Next Page</UserNavigationButton>
       )}
     </Wrapper>
   );
