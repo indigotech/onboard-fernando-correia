@@ -1,7 +1,8 @@
-import { Container, UserCard, UserList, UserNavigation } from '../Dashboard/style';
+import { Container, CreateUserButton, UserCard, UserList, UserNavigation } from './style';
 import { useQuery } from '@apollo/client';
 import { GET_USERS } from '../../utils/apollo-queries';
 import { useState } from 'react';
+import { HeaderList, PageTitle } from './style';
 
 interface UsersResponseData {
   users: {
@@ -31,7 +32,13 @@ export const Dashboard: React.FC = () => {
 
   return (
     <Container>
-      <h1>User List</h1>
+      <HeaderList>
+        <PageTitle>User List</PageTitle>
+        <a href={'/add-user'}>
+          <CreateUserButton>Add User</CreateUserButton>
+        </a>
+      </HeaderList>
+
       {loading ? (
         <img src='spinner.gif' height='100px' />
       ) : error ? (

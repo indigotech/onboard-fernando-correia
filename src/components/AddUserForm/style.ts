@@ -7,7 +7,7 @@ export const Container = styled.div`
   color: #4a5568;
 `;
 
-export const HeaderList = styled.div`
+export const HeaderCreateUser = styled.div`
   border-bottom: 1px solid gray;
   display: flex;
   align-items: center;
@@ -18,7 +18,7 @@ export const PageTitle = styled.h1`
   padding-bottom: 0.5rem;
 `;
 
-export const CreateUserButton = styled.button`
+export const ListUserButton = styled.button`
   width: 100%;
   margin-right: 2rem;
   font-size: x-large;
@@ -29,27 +29,31 @@ export const CreateUserButton = styled.button`
   cursor: pointer;
 `;
 
-export const UserList = styled.div`
-  margin: 1.5rem auto;
-  display: grid;
+export const FormAddUser = styled.form`
   align-items: center;
-  justify-content: space-between;
-  grid-template-columns: 30% 30% 30%;
+  justify-content: center;
+  max-width: 500px;
+  text-align: start;
+  margin: 3rem auto;
+  color: #718096;
 `;
 
-export const UserCard = styled.div`
-  border-radius: 15px;
-  background-color: #faf5ff;
-  margin-bottom: 2rem;
-  padding: 0.25rem 1.5rem;
-  border: 1px solid purple;
+export const InputAddUser = styled.input`
+  padding: 1rem 2rem;
+  box-sizing: border-box;
+  font-size: large;
+  margin: 0.5rem 0 1.5rem 0;
+  display: block;
+  width: 100%;
+  border-radius: 1rem;
+  border-color: #718096;
 `;
 
-export const UserNavigation = styled.button`
-  width: 20%;
-  margin-right: 2rem;
+export const ButtonAddUser = styled.button`
+  width: 100%;
   font-size: x-large;
   padding: 0.5rem 0;
+  margin-top: 2rem;
   border-radius: 1rem;
   background-color: #9f7aea;
   color: white;
