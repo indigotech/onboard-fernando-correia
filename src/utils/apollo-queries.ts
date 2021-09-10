@@ -12,3 +12,22 @@ export const LOGIN = gql`
     }
   }
 `;
+
+export const GET_USERS = gql`
+  query users($offset: Int, $limit: Int) {
+    users(pageInfo: { offset: $offset, limit: $limit }) {
+      nodes {
+        id
+        name
+        email
+      }
+      count
+      pageInfo {
+        offset
+        limit
+        hasNextPage
+        hasPreviousPage
+      }
+    }
+  }
+`;
