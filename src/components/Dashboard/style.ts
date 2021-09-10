@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   max-width: 1080px;
-  margin: 5rem auto;
+  margin: 4rem auto;
   font-family: sans-serif;
   color: #4a5568;
 
@@ -13,7 +13,7 @@ export const Container = styled.div`
 `;
 
 export const UserList = styled.div`
-  margin: 3rem auto;
+  margin: 1.5rem auto;
   display: grid;
   align-items: center;
   justify-content: space-between;
