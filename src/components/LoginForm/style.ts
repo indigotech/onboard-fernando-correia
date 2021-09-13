@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const Container = styled.div`
+export const Wrapper = styled.div`
   max-width: 500px;
   margin: 5rem auto;
   text-align: center;
@@ -13,7 +13,7 @@ export const FormLogin = styled.form`
   color: #718096;
 `;
 
-export const InputLogin = styled.input`
+export const LoginInput = styled.input`
   padding: 1rem 2rem;
   box-sizing: border-box;
   font-size: large;
@@ -24,7 +24,7 @@ export const InputLogin = styled.input`
   border-color: #718096;
 `;
 
-export const ButtonLogin = styled.button`
+export const LoginButton = styled.button`
   width: 100%;
   font-size: x-large;
   padding: 0.5rem 0;

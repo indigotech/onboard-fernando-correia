@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const Container = styled.div`
+export const Wrapper = styled.div`
   max-width: 1080px;
   margin: 4rem auto;
   font-family: sans-serif;
@@ -28,7 +28,7 @@ export const UserCard = styled.div`
   border: 1px solid purple;
 `;
 
-export const UserNavigation = styled.button`
+export const UserNavigationButton = styled.button`
   width: 20%;
   margin-right: 2rem;
   font-size: x-large;

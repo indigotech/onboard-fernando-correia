@@ -1,16 +1,18 @@
-import { Container, UserCard, UserList, UserNavigation } from '../Dashboard/style';
+import { Wrapper, UserCard, UserList, UserNavigationButton } from '../Dashboard/style';
 import { useQuery } from '@apollo/client';
 import { GET_USERS } from '../../utils/apollo-queries';
 import { useState } from 'react';
 
+interface User {
+  id: number;
+  email: string;
+  name: string;
+}
+
 interface UsersResponseData {
   users: {
     count: number;
-    nodes: {
-      id: number;
-      email: string;
-      name: string;
-    }[];
+    nodes: User[];
     pageInfo: {
       hasNextPage: boolean;
       hasPreviousPage: boolean;
@@ -20,9 +22,10 @@ interface UsersResponseData {
   };
 }
 
+const limit = 12;
+
 export const Dashboard: React.FC = () => {
   const [offset, setOffset] = useState(0);
-  const limit = 12;
   const { data, loading, error } = useQuery(GET_USERS, { variables: { offset, limit } });
 
   const responseData: UsersResponseData = data;
@@ -30,13 +33,14 @@ export const Dashboard: React.FC = () => {
   const pageInfo = responseData?.users.pageInfo;
 
   return (
-    <Container>
+    <Wrapper>
       <h1>User List</h1>
-      {loading ? (
-        <img src='spinner.gif' height='100px' />
-      ) : error ? (
-        <h2>{error.message}</h2>
-      ) : (
+
+      {loading && <img src='spinner.gif' height='100px' />}
+
+      {error && <h2>{error.message}</h2>}
+
+      {!loading && !error && (
         <UserList>
           {nodes?.map((user) => {
             return (
@@ -48,28 +52,17 @@ export const Dashboard: React.FC = () => {
           })}
         </UserList>
       )}
-      {pageInfo?.hasPreviousPage ? (
-        <UserNavigation
-          onClick={() => {
-            setOffset(offset - limit);
-          }}
-        >
+
+      {pageInfo?.hasPreviousPage && (
+        <UserNavigationButton onClick={() => setOffset(offset - limit)}>
           Prev Page
-        </UserNavigation>
-      ) : (
-        ''
+        </UserNavigationButton>
       )}
-      {pageInfo?.hasNextPage ? (
-        <UserNavigation
-          onClick={() => {
-            setOffset(offset + limit);
-          }}
-        >
+      {pageInfo?.hasNextPage && (
+        <UserNavigationButton onClick={() => setOffset(offset + limit)}>
           Next Page
-        </UserNavigation>
-      ) : (
-        ''
+        </UserNavigationButton>
       )}
-    </Container>
+    </Wrapper>
   );
 };
