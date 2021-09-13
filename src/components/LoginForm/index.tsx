@@ -1,5 +1,5 @@
 import { FormEvent, useContext, useState } from 'react';
-import { ButtonLogin, Container, FormLogin, InputLogin } from './style';
+import { LoginButton, Wrapper, FormLogin, LoginInput } from './style';
 import { Redirect, Route } from 'react-router';
 import { AuthContext } from '../../contexts/auth-context';
 
@@ -23,12 +23,12 @@ export const LoginForm: React.FC = () => {
       <Route exact path='/'>
         {loggedIn ? <Redirect to='/dashboard' /> : ''}
       </Route>
-      <Container>
+      <Wrapper>
         <h1>Bem-vindo(a) à Taqtile!</h1>
 
         <FormLogin onSubmit={handleSubmit}>
           <label htmlFor='login-form-email'>E-mail</label>
-          <InputLogin
+          <LoginInput
             id='login-form-email'
             type='text'
             name='E-mail'
@@ -38,7 +38,7 @@ export const LoginForm: React.FC = () => {
           />
 
           <label htmlFor='login-form-password'>Password</label>
-          <InputLogin
+          <LoginInput
             id='login-form-password'
             type='password'
             name='Password'
@@ -49,9 +49,9 @@ export const LoginForm: React.FC = () => {
 
           {loginError ? <p style={{ color: 'red' }}>E-mail or Password incorrect</p> : ''}
 
-          <ButtonLogin type='submit'>{loading ? <img src='spinner.gif' height='20px' /> : 'Entrar'}</ButtonLogin>
+          <LoginButton type='submit'>{loading ? <img src='spinner.gif' height='20px' /> : 'Entrar'}</LoginButton>
         </FormLogin>
-      </Container>
+      </Wrapper>
     </>
   );
 };
