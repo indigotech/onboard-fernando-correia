@@ -1,4 +1,5 @@
 import { FormEvent, useState } from 'react';
+import { validateBirthDate } from '../../utils/forms-validations';
 import {
   ButtonAddUser,
   Container,
@@ -16,9 +17,25 @@ export const AddUserForm: React.FC = () => {
   const [birthDate, setBirthDate] = useState('');
   const [role, setRole] = useState('');
 
+  const [userCreationError, setUserCreationError] = useState(false);
+
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
 
+    setEmail('');
+    setName('');
+    setPhone('');
+    setBirthDate('');
+    setRole('');
+
+    const isValidBirthDate = validateBirthDate(birthDate);
+
+    if (!isValidBirthDate) {
+      setUserCreationError(true);
+      return;
+    }
+
+    setUserCreationError(false);
     console.log({ name, email, phone, birthDate, role });
   }
 
@@ -80,6 +97,8 @@ export const AddUserForm: React.FC = () => {
           value={role}
           onChange={(e) => setRole(e.target.value)}
         />
+
+        {userCreationError ? <p style={{ color: 'red' }}>Birth date invalid</p> : ''}
 
         <ButtonAddUser>Create User</ButtonAddUser>
       </FormAddUser>
