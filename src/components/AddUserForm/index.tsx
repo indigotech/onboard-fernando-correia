@@ -1,5 +1,5 @@
 import { FormEvent, useState } from 'react';
-import { validateBirthDate } from '../../utils/forms-validations';
+import { validateBirthDate, validateEmail, validatePhone } from '../../utils/forms-validations';
 import {
   ButtonAddUser,
   Container,
@@ -8,14 +8,22 @@ import {
   InputAddUser,
   ListUserButton,
   PageTitle,
+  SelectUserRole,
 } from './style';
+
+enum Role {
+  USER = 'user',
+  ADMIN = 'admin',
+}
+
+type RoleType = typeof Role[keyof typeof Role];
 
 export const AddUserForm: React.FC = () => {
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [birthDate, setBirthDate] = useState('');
-  const [role, setRole] = useState('');
+  const [role, setRole] = useState<RoleType>('' as RoleType);
 
   const [userCreationError, setUserCreationError] = useState(false);
 
@@ -26,11 +34,13 @@ export const AddUserForm: React.FC = () => {
     setName('');
     setPhone('');
     setBirthDate('');
-    setRole('');
+    setRole('' as RoleType);
 
     const isValidBirthDate = validateBirthDate(birthDate);
+    const isValidEmail = validateEmail(email);
+    const isValidPhone = validatePhone(phone);
 
-    if (!isValidBirthDate) {
+    if (!isValidBirthDate && !isValidEmail && !isValidPhone) {
       setUserCreationError(true);
       return;
     }
@@ -89,16 +99,19 @@ export const AddUserForm: React.FC = () => {
         />
 
         <label htmlFor='add-user-role'>Role</label>
-        <InputAddUser
+        <SelectUserRole
           id='add-user-role'
-          type='text'
           name='role'
           required
           value={role}
-          onChange={(e) => setRole(e.target.value)}
-        />
+          onChange={(e) => setRole(e.target.value as RoleType)}
+        >
+          <option />
+          <option value={Role.USER}>user</option>
+          <option value={Role.ADMIN}>admin</option>
+        </SelectUserRole>
 
-        {userCreationError ? <p style={{ color: 'red' }}>Birth date invalid</p> : ''}
+        {userCreationError && <p style={{ color: 'red' }}>Birth date, email or phone invalid</p>}
 
         <ButtonAddUser>Create User</ButtonAddUser>
       </FormAddUser>

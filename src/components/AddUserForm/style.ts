@@ -49,6 +49,18 @@ export const InputAddUser = styled.input`
   border-color: #718096;
 `;
 
+export const SelectUserRole = styled.select`
+  padding: 1rem 2rem;
+  box-sizing: border-box;
+  font-size: large;
+  margin: 0.5rem 0 1.5rem 0;
+  display: block;
+  width: 100%;
+  border-radius: 1rem;
+  border-width: 2px;
+  border-color: #718096;
+`;
+
 export const ButtonAddUser = styled.button`
   width: 100%;
   font-size: x-large;

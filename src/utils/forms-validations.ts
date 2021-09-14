@@ -15,3 +15,8 @@ export function validateBirthDate(birthDate: string): boolean {
   const isValid = 1900 < Number(date[0]) && Number(date[0]) < currentYear;
   return isValid;
 }
+
+export function validatePhone(phone: string): boolean {
+  const regex = /^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{2})[-. )]*(\d{5})[-. ]*(\d{4})(?: *x(\d+))?\s*$/;
+  return regex.test(phone);
+}

@@ -46,7 +46,6 @@ export const Dashboard: React.FC = () => {
       {error && <h2>{error.message}</h2>}
 
       {!loading && !error && (
-
         <UserList>
           {nodes?.map((user) => {
             return (
