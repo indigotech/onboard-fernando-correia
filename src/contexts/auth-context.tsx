@@ -6,7 +6,7 @@ import { validateEmail, validatePassword } from '../utils/forms-validations';
 interface AuthContextData {
   authenticate: (email: string, password: string) => Promise<void>;
   loading: boolean;
-  loginError: boolean;
+  loginError: string;
   loggedIn: boolean;
 }
 
@@ -31,7 +31,7 @@ export const AuthContext = createContext({} as AuthContextData);
 
 export function AuthProvider({ children }: AuthProviderProps): JSX.Element {
   const [login, { loading }] = useMutation(LOGIN);
-  const [loginError, setLoginError] = useState(false);
+  const [loginError, setLoginError] = useState('');
   const [loggedIn, setLoggedIn] = useState(false);
 
   async function authenticate(email: string, password: string): Promise<void> {
@@ -39,7 +39,7 @@ export function AuthProvider({ children }: AuthProviderProps): JSX.Element {
     const isValidPassword = validatePassword(password);
 
     if (!isValidEmail || !isValidPassword) {
-      setLoginError(true);
+      setLoginError('Email or Password invalid');
       return;
     }
 
@@ -51,9 +51,11 @@ export function AuthProvider({ children }: AuthProviderProps): JSX.Element {
       window.localStorage.setItem('access_token', token);
 
       setLoggedIn(true);
-      setLoginError(false);
-    } catch (err) {
-      setLoginError(true);
+      setLoginError('');
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setLoginError(err.message);
+      }
     }
   }
 

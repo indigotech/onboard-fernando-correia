@@ -2,6 +2,7 @@ import { Wrapper, UserCard, UserList, UserNavigationButton, PageTitle, HeaderLis
 import { useQuery } from '@apollo/client';
 import { GET_USERS } from '../../utils/apollo-queries';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 interface User {
   id: number;
@@ -36,9 +37,9 @@ export const Dashboard: React.FC = () => {
     <Wrapper>
       <HeaderList>
         <PageTitle>User List</PageTitle>
-        <a href='/add-user'>
+        <Link to='/add-user'>
           <CreateUserButton>Add User</CreateUserButton>
-        </a>
+        </Link>
       </HeaderList>
 
       {loading && <img src='spinner.gif' height='100px' />}
