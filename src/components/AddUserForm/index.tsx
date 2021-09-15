@@ -2,7 +2,7 @@ import { useMutation } from '@apollo/client';
 import { FormEvent, useState } from 'react';
 import { Link, Redirect, Route } from 'react-router-dom';
 import { ADD_USER } from '../../utils/apollo-queries';
-import { validateBirthDate, validateEmail, validatePhone } from '../../utils/forms-validations';
+import { validateBirthDate, validateEmail, validatePassword, validatePhone } from '../../utils/forms-validations';
 import {
   ButtonAddUser,
   Wrapper,
@@ -18,6 +18,7 @@ interface UserCreationErrorData {
   birthDateError: boolean;
   emailError: boolean;
   phoneError: boolean;
+  passwordError: boolean;
 }
 
 enum Role {
@@ -28,11 +29,12 @@ enum Role {
 export type RoleType = typeof Role[keyof typeof Role];
 
 export const AddUserForm: React.FC = () => {
-  const [email, setEmail] = useState('');
   const [name, setName] = useState('');
-  const [phone, setPhone] = useState('');
+  const [email, setEmail] = useState('');
   const [birthDate, setBirthDate] = useState('');
+  const [phone, setPhone] = useState('');
   const [role, setRole] = useState<RoleType>();
+  const [password, setPassword] = useState('');
 
   const [createUser] = useMutation(ADD_USER);
   const [userCreationError, setUserCreationError] = useState({} as UserCreationErrorData);
@@ -51,12 +53,14 @@ export const AddUserForm: React.FC = () => {
     const isValidBirthDate = validateBirthDate(birthDate);
     const isValidEmail = validateEmail(email);
     const isValidPhone = validatePhone(phone);
+    const isValidPassword = validatePassword(password);
 
-    if (!isValidBirthDate || !isValidEmail || !isValidPhone) {
+    if (!isValidBirthDate || !isValidEmail || !isValidPhone || !isValidPassword) {
       const error: UserCreationErrorData = {
         birthDateError: !isValidBirthDate,
         emailError: !isValidEmail,
         phoneError: !isValidPhone,
+        passwordError: !isValidPassword,
       };
       setUserCreationError(error);
       return;
@@ -64,7 +68,7 @@ export const AddUserForm: React.FC = () => {
 
     setUserCreationError({} as UserCreationErrorData);
     try {
-      await createUser({ variables: { name, email, phone, birthDate, password: '1234qwer', role } });
+      await createUser({ variables: { name, email, phone, birthDate, password, role } });
       setAddUserSuccess(true);
     } catch (err: unknown) {
       if (err instanceof Error) {
@@ -141,6 +145,17 @@ export const AddUserForm: React.FC = () => {
             <option value={Role.USER}>user</option>
             <option value={Role.ADMIN}>admin</option>
           </SelectUserRole>
+
+          <label htmlFor='login-form-password'>Password</label>
+          <InputAddUser
+            id='login-form-password'
+            type='password'
+            name='Password'
+            required
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          {userCreationError.passwordError && <p style={{ color: 'red' }}>Password invalid</p>}
 
           {addUserError && <p style={{ color: 'red' }}>{addUserError}</p>}
 
