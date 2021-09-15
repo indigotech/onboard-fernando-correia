@@ -42,7 +42,7 @@ export const Dashboard: React.FC = () => {
         </Link>
       </HeaderList>
 
-      {loading && <img src='spinner.gif' height='100px' />}
+      {loading && <img src='/spinner.gif' height='100px' />}
 
       {error && <h2>{error.message}</h2>}
 
@@ -50,10 +50,12 @@ export const Dashboard: React.FC = () => {
         <UserList>
           {nodes?.map((user) => {
             return (
-              <UserCard key={user.id}>
-                <h2>{user.name}</h2>
-                <p>{user.email}</p>
-              </UserCard>
+              <Link key={user.id} to={`/dashboard/${user.id}`} style={{ textDecoration: 'inherit', color: 'inherit' }}>
+                <UserCard>
+                  <h2>{user.name}</h2>
+                  <p>{user.email}</p>
+                </UserCard>
+              </Link>
             );
           })}
         </UserList>
