@@ -2,14 +2,31 @@ import styled from 'styled-components';
 
 export const Wrapper = styled.div`
   max-width: 1080px;
-  margin: 4rem auto;
+  margin: 2rem auto;
   font-family: sans-serif;
   color: #4a5568;
+`;
 
-  h1 {
-    padding-bottom: 0.5rem;
-    border-bottom: 1px solid gray;
-  }
+export const HeaderList = styled.div`
+  border-bottom: 1px solid gray;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+export const PageTitle = styled.h1`
+  padding-bottom: 0.5rem;
+`;
+
+export const CreateUserButton = styled.button`
+  width: 100%;
+  margin-right: 2rem;
+  font-size: x-large;
+  padding: 0.5rem 0;
+  border-radius: 1rem;
+  background-color: #9f7aea;
+  color: white;
+  cursor: pointer;
 `;
 
 export const UserList = styled.div`

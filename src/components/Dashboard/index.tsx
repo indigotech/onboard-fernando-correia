@@ -1,4 +1,4 @@
-import { Wrapper, UserCard, UserList, UserNavigationButton } from '../Dashboard/style';
+import { Wrapper, UserCard, UserList, UserNavigationButton, PageTitle, HeaderList, CreateUserButton } from './style';
 import { useQuery } from '@apollo/client';
 import { GET_USERS } from '../../utils/apollo-queries';
 import { useState } from 'react';
@@ -34,7 +34,12 @@ export const Dashboard: React.FC = () => {
 
   return (
     <Wrapper>
-      <h1>User List</h1>
+      <HeaderList>
+        <PageTitle>User List</PageTitle>
+        <a href='/add-user'>
+          <CreateUserButton>Add User</CreateUserButton>
+        </a>
+      </HeaderList>
 
       {loading && <img src='spinner.gif' height='100px' />}
 
@@ -54,14 +59,10 @@ export const Dashboard: React.FC = () => {
       )}
 
       {pageInfo?.hasPreviousPage && (
-        <UserNavigationButton onClick={() => setOffset(offset - limit)}>
-          Prev Page
-        </UserNavigationButton>
+        <UserNavigationButton onClick={() => setOffset(offset - limit)}>Prev Page</UserNavigationButton>
       )}
       {pageInfo?.hasNextPage && (
-        <UserNavigationButton onClick={() => setOffset(offset + limit)}>
-          Next Page
-        </UserNavigationButton>
+        <UserNavigationButton onClick={() => setOffset(offset + limit)}>Next Page</UserNavigationButton>
       )}
     </Wrapper>
   );

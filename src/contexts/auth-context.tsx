@@ -1,7 +1,7 @@
 import { useMutation } from '@apollo/client';
 import { createContext, ReactNode, useState } from 'react';
 import { LOGIN } from '../utils/apollo-queries';
-import { validateEmail, validatePassword } from '../utils/login-validations';
+import { validateEmail, validatePassword } from '../utils/forms-validations';
 
 interface AuthContextData {
   authenticate: (email: string, password: string) => Promise<void>;
@@ -14,14 +14,16 @@ interface AuthProviderProps {
   children: ReactNode;
 }
 
+interface User {
+  id: number;
+  email: string;
+  name: string;
+}
+
 interface LoginResponseData {
   login: {
     token: string;
-    user: {
-      id: string;
-      name: string;
-      role: string;
-    };
+    user: User;
   };
 }
 
