@@ -2,6 +2,7 @@ import { FormEvent, useContext, useState } from 'react';
 import { LoginButton, Wrapper, FormLogin, LoginInput } from './style';
 import { Redirect, Route } from 'react-router';
 import { AuthContext } from '../../contexts/auth-context';
+import { InputError } from '../InputError';
 
 export const LoginForm: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -47,7 +48,7 @@ export const LoginForm: React.FC = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
 
-          {loginError && <p style={{ color: 'red' }}>{loginError}</p>}
+          {loginError && <InputError message={loginError} />}
 
           <LoginButton type='submit'>{loading ? <img src='spinner.gif' height='20px' /> : 'Entrar'}</LoginButton>
         </FormLogin>

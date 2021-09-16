@@ -3,6 +3,7 @@ import { FormEvent, useState } from 'react';
 import { Link, Redirect, Route } from 'react-router-dom';
 import { ADD_USER } from '../../utils/apollo-queries';
 import { validateBirthDate, validateEmail, validatePassword, validatePhone } from '../../utils/forms-validations';
+import { InputError } from '../InputError';
 import {
   ButtonAddUser,
   Wrapper,
@@ -110,7 +111,7 @@ export const AddUserForm: React.FC = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
-          {userCreationError?.emailError && <p style={{ color: 'red' }}>Email invalid</p>}
+          {userCreationError?.emailError && <InputError message='Email invalid' />}
 
           <label htmlFor='add-user-birth-date'>Birth Date</label>
           <InputAddUser
@@ -121,7 +122,7 @@ export const AddUserForm: React.FC = () => {
             value={birthDate}
             onChange={(e) => setBirthDate(e.target.value)}
           />
-          {userCreationError?.birthDateError && <p style={{ color: 'red' }}>Birth date invalid</p>}
+          {userCreationError?.birthDateError && <InputError message='Birth date invalid' />}
 
           <label htmlFor='add-user-phone'>Phone</label>
           <InputAddUser
@@ -132,7 +133,7 @@ export const AddUserForm: React.FC = () => {
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
           />
-          {userCreationError?.phoneError && <p style={{ color: 'red' }}>Phone invalid</p>}
+          {userCreationError?.phoneError && <InputError message='Phone invalid' />}
 
           <label htmlFor='add-user-role'>Role</label>
           <SelectUserRole
@@ -156,9 +157,9 @@ export const AddUserForm: React.FC = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          {userCreationError?.passwordError && <p style={{ color: 'red' }}>Password invalid</p>}
+          {userCreationError?.passwordError && <InputError message='Password invalid' />}
 
-          {addUserError && <p style={{ color: 'red' }}>{addUserError}</p>}
+          {addUserError && <InputError message={addUserError} />}
 
           <ButtonAddUser>Create User</ButtonAddUser>
         </FormAddUser>
