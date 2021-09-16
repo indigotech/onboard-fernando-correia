@@ -37,7 +37,7 @@ export const AddUserForm: React.FC = () => {
   const [password, setPassword] = useState('');
 
   const [createUser] = useMutation(ADD_USER);
-  const [userCreationError, setUserCreationError] = useState({} as UserCreationErrorData | null);
+  const [userCreationError, setUserCreationError] = useState<UserCreationErrorData | null>();
   const [addUserError, setAddUserError] = useState('');
   const [addUserSuccess, setAddUserSuccess] = useState(false);
 
