@@ -3,5 +3,5 @@ interface InputTypeProps {
 }
 
 export const InputError = ({ message }: InputTypeProps): JSX.Element => {
-  return <p style={{ color: 'red' }}>{message} invalid</p>;
+  return <p style={{ color: 'red' }}>{message}</p>;
 };
