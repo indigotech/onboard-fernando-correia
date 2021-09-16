@@ -47,7 +47,7 @@ export const LoginForm: React.FC = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
 
-          {loginError ? <p style={{ color: 'red' }}>E-mail or Password incorrect</p> : ''}
+          {loginError ? <p style={{ color: 'red' }}>{loginError}</p> : ''}
 
           <LoginButton type='submit'>{loading ? <img src='spinner.gif' height='20px' /> : 'Entrar'}</LoginButton>
         </FormLogin>

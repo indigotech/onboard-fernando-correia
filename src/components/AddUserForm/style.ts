@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const Container = styled.div`
+export const Wrapper = styled.div`
   max-width: 1080px;
   margin: 2rem auto;
   font-family: sans-serif;
@@ -30,8 +30,6 @@ export const ListUserButton = styled.button`
 `;
 
 export const FormAddUser = styled.form`
-  align-items: center;
-  justify-content: center;
   max-width: 500px;
   text-align: start;
   margin: 3rem auto;
