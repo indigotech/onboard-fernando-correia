@@ -18,11 +18,3 @@ export const PageTitle = styled.h1`
   padding-bottom: 0.5rem;
 `;
 
-export const UserDetail = styled.div`
-  font-size: large;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border-bottom: 1px solid gray;
-  padding: 0 1rem;
-`;

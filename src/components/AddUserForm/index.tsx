@@ -37,7 +37,7 @@ export const AddUserForm: React.FC = () => {
   const [password, setPassword] = useState('');
 
   const [createUser] = useMutation(ADD_USER);
-  const [userCreationError, setUserCreationError] = useState({} as UserCreationErrorData);
+  const [userCreationError, setUserCreationError] = useState({} as UserCreationErrorData | null);
   const [addUserError, setAddUserError] = useState('');
   const [addUserSuccess, setAddUserSuccess] = useState(false);
 
@@ -49,6 +49,7 @@ export const AddUserForm: React.FC = () => {
     setPhone('');
     setBirthDate('');
     setRole(undefined);
+    setPassword('');
 
     const isValidBirthDate = validateBirthDate(birthDate);
     const isValidEmail = validateEmail(email);
@@ -66,9 +67,9 @@ export const AddUserForm: React.FC = () => {
       return;
     }
 
-    setUserCreationError({} as UserCreationErrorData);
+    setUserCreationError(null);
     try {
-      await createUser({ variables: { name, email, phone, birthDate, password, role } });
+      await createUser({ variables: { data: { name, email, phone, birthDate, password, role } } });
       setAddUserSuccess(true);
     } catch (err: unknown) {
       if (err instanceof Error) {
@@ -109,7 +110,7 @@ export const AddUserForm: React.FC = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
-          {userCreationError.emailError && <p style={{ color: 'red' }}>Email invalid</p>}
+          {userCreationError?.emailError && <p style={{ color: 'red' }}>Email invalid</p>}
 
           <label htmlFor='add-user-birth-date'>Birth Date</label>
           <InputAddUser
@@ -120,7 +121,7 @@ export const AddUserForm: React.FC = () => {
             value={birthDate}
             onChange={(e) => setBirthDate(e.target.value)}
           />
-          {userCreationError.birthDateError && <p style={{ color: 'red' }}>Birth date invalid</p>}
+          {userCreationError?.birthDateError && <p style={{ color: 'red' }}>Birth date invalid</p>}
 
           <label htmlFor='add-user-phone'>Phone</label>
           <InputAddUser
@@ -131,7 +132,7 @@ export const AddUserForm: React.FC = () => {
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
           />
-          {userCreationError.phoneError && <p style={{ color: 'red' }}>Phone invalid</p>}
+          {userCreationError?.phoneError && <p style={{ color: 'red' }}>Phone invalid</p>}
 
           <label htmlFor='add-user-role'>Role</label>
           <SelectUserRole
@@ -155,7 +156,7 @@ export const AddUserForm: React.FC = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          {userCreationError.passwordError && <p style={{ color: 'red' }}>Password invalid</p>}
+          {userCreationError?.passwordError && <p style={{ color: 'red' }}>Password invalid</p>}
 
           {addUserError && <p style={{ color: 'red' }}>{addUserError}</p>}
 

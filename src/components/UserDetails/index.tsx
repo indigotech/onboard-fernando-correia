@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom';
 import { GET_USER } from '../../utils/apollo-queries';
 import { ListUserButton } from '../AddUserForm/style';
 import { HeaderList, PageTitle } from '../Dashboard/style';
-import { UserDetail, Wrapper } from './style';
+import { UserDetail } from '../UserDetail';
+import { Wrapper } from './style';
 
 interface UserDetailsProps {
   match: { params: { id: string } };
@@ -48,22 +49,10 @@ export const UserDetails = ({ match }: UserDetailsProps): JSX.Element => {
       {!loading && !error && (
         <>
           <h1>{user?.name}</h1>
-          <UserDetail>
-            <h4>Email:</h4>
-            <p>{user?.email}</p>
-          </UserDetail>
-          <UserDetail>
-            <h4>Data de Nascimento:</h4>
-            <p>{formatDate(user?.birthDate)}</p>
-          </UserDetail>
-          <UserDetail>
-            <h4>Contato:</h4>
-            <p>{user?.phone}</p>
-          </UserDetail>
-          <UserDetail>
-            <h4>Cargo:</h4>
-            <p>{user?.role}</p>
-          </UserDetail>
+          <UserDetail title='Email' data={user?.email} />
+          <UserDetail title='Data de Nascimento' data={formatDate(user?.birthDate)} />
+          <UserDetail title='Contato' data={user?.phone} />
+          <UserDetail title='Cargo' data={user?.role} />
         </>
       )}
     </Wrapper>
